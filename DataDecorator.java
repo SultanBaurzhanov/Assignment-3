@@ -61,24 +61,3 @@ class EncodingDecorator implements DataDecorator {
         return data;
     }
 }
-
-// Client code to apply decorators
-DataAggregator aggregator = new DataAggregator();
-
-// Assuming you have already aggregated data from files
-List<String> aggregatedData = aggregator.getAggregatedData();
-
-// Apply decorators based on user choice
-boolean userChoosesEncryption = true;
-boolean userChoosesEncoding = true;
-
-if (userChoosesEncryption) {
-    DataDecorator encryptionDecorator = new EncryptionDecorator();
-    aggregatedData = encryptionDecorator.decorateData(aggregatedData);
-}
-
-if (userChoosesEncoding) {
-    String encoding = "UTF-16"; 
-    DataDecorator encodingDecorator = new EncodingDecorator(encoding);
-    aggregatedData = encodingDecorator.decorateData(aggregatedData);
-}
