@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 //interface for many file types
@@ -6,8 +10,6 @@ interface FileAdapter {
 }
 
 //concrete adapters for many file types
-//gpt: "implement the Adapter and Decorator design patterns for your assignment. Please note that this is a basic example, and in a real-world scenario, you would need to implement a more comprehensive solution."
-//remove all the sus comments that might look like gpt but not these ones on top like "//interface for many file types"
 class TxtFileAdapter implements FileAdapter {
     @Override
     public List<String> readData(String filePath) throws IOException {
