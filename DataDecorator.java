@@ -4,14 +4,14 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
-//decorator pattern
-//interface for data decorations
+// Decorator pattern
+// Interface for data decorations
 interface DataDecorator {
     List<String> decorateData(List<String> data);
 }
 
-//concrete decorators
-//look up how to encrypt files
+// Concrete decorators
+// Look up how to encrypt files
 class EncryptionDecorator implements DataDecorator {
     private /*'final' here if goes wrong*/ String secretKey = "BIGSHOT"; //secret key for encryption
 
