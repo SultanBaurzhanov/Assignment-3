@@ -1,63 +1,60 @@
 import java.util.List;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import javax.crypto.spec.IvParameterSpec;
+import java.nio.charset.StandardCharsets;
 
-//interface for data decorators
+//decorator pattern
+//interface for data decorations
 interface DataDecorator {
     List<String> decorateData(List<String> data);
 }
 
-//Concrete decorators
+//concrete decorators
+//look up how to encrypt files
 class EncryptionDecorator implements DataDecorator {
-     private static final String encryptionKey = "SecretKey12345";
-     private List<String> encryptData(List<String> data) {
+    private /*'final' here if goes wrong*/ String secretKey = "BIGSHOT"; //secret key for encryption
+
+    public EncryptionDecorator(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
+    @Override
+    public List<String> decorateData(List<String> data) {
         try {
-            SecretKeySpec secretKey = new SecretKeySpec(encryptionKey.getBytes(StandardCharsets.UTF_8), "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            IvParameterSpec ivParameterSpec = new IvParameterSpec(encryptionKey.getBytes(StandardCharsets.UTF_8));
-            
             for (int i = 0; i < data.size(); i++) {
-                byte[] encryptedBytes = cipher.doFinal(data.get(i).getBytes(StandardCharsets.UTF_8));
-                data.set(i, new String(encryptedBytes, StandardCharsets.UTF_8));
+                String originalData = data.get(i);
+                String encryptedData = encrypt(originalData, secretKey);
+                data.set(i, encryptedData);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return data;
     }
-    
-    @Override
-    public List<String> decorateData(List<String> data) {
-        data = encryptData(data);
-        return data;
+
+    private String encrypt(String data, String secretKey) throws Exception {
+        SecretKeySpec key = new SecretKeySpec(secretKey.getBytes(), "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 }
 
 class EncodingDecorator implements DataDecorator {
-    private String encoding;
-
-    public EncodingDecorator(String encoding) {
-        this.encoding = encoding;
-    }
-
-    private List<String> encodeData(List<String> data) {
-        try {
-            for (int i = 0; i < data.size(); i++) {
-                byte[] encodedBytes = data.get(i).getBytes(encoding);
-                data.set(i, new String(encodedBytes, encoding));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public List<String> decorateData(List<String> data) {
+        for (int i = 0; i < data.size(); i++) {
+            String originalData = data.get(i);
+            String encodedData = encode(originalData);
+            data.set(i, encodedData);
         }
         return data;
     }
-    
-    @Override
-    public List<String> decorateData(List<String> data) {
-        data = encodeData(data);
-        return data;
+
+    private String encode(String data) {
+        byte[] encodedBytes = data.getBytes(StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(encodedBytes);
     }
 }
