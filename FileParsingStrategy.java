@@ -27,7 +27,7 @@ class CsvFileParsingStrategy implements FileParsingStrategy {
         // Read and parse the data
         List<String> data = new ArrayList<>();
         data.add("Csv data line 1");
-        data add("Csv data line 2");
+        data.add("Csv data line 2");
         return data;
     }
 }
