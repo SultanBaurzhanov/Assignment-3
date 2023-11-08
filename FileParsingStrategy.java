@@ -5,13 +5,12 @@ interface FileParsingStrategy {
     List<String> parseFile(String filePath);
 }
 
-// Concrete strategies for specific files
+//concrete strategies for 3 file types
 class TxtFileParsingStrategy implements FileParsingStrategy {
     @Override
     public List<String> parseFile(String filePath) {
-        // Implement parsing data from a .txt file
         System.out.println("Parsing data from a .txt file: " + filePath);
-        // Read and parse the data
+        //read data
         List<String> data = new ArrayList<>();
         data.add("Txt data line 1");
         data.add("Txt data line 2");
@@ -22,9 +21,7 @@ class TxtFileParsingStrategy implements FileParsingStrategy {
 class CsvFileParsingStrategy implements FileParsingStrategy {
     @Override
     public List<String> parseFile(String filePath) {
-        // Implement parsing data from a .csv file
         System.out.println("Parsing data from a .csv file: " + filePath);
-        // Read and parse the data
         List<String> data = new ArrayList<>();
         data.add("Csv data line 1");
         data.add("Csv data line 2");
@@ -35,9 +32,7 @@ class CsvFileParsingStrategy implements FileParsingStrategy {
 class JsonFileParsingStrategy implements FileParsingStrategy {
     @Override
     public List<String> parseFile(String filePath) {
-        // Implement parsing data from a .json file
         System.out.println("Parsing data from a .json file: " + filePath);
-        // Read and parse the data
         List<String> data = new ArrayList<>();
         data.add("Json data line 1");
         data.add("Json data line 2");
@@ -50,7 +45,7 @@ class DataAggregator {
     private List<String> aggregatedData = new ArrayList<>();
 
     public void aggregateData(FileParsingStrategy strategy, String filePath) {
-        // Use the given strategy to parse and aggregate data
+        //parse and aggregate data with strat pattern
         List<String> data = strategy.parseFile(filePath);
         aggregatedData.addAll(data);
     }
