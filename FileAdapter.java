@@ -1,18 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-//make FileAdapter interface to read many files
-interface FileAdapter {
-    List<String> readData(String filePath);
+interface FileParsingStrategy {
+    List<String> parseFile(String filePath);
 }
 
-//Concrete adapters for specific files
-class TxtFileAdapter implements FileAdapter {
+// Concrete strategies for specific files
+class TxtFileParsingStrategy implements FileParsingStrategy {
     @Override
-    public List<String> readData(String filePath) {
-        // reading a txt
-        System.out.println("Reading data from a .txt file: " + filePath);
-        // make it read the data
+    public List<String> parseFile(String filePath) {
+        // Implement parsing data from a .txt file
+        System.out.println("Parsing data from a .txt file: " + filePath);
+        // Read and parse the data
         List<String> data = new ArrayList<>();
         data.add("Txt data line 1");
         data.add("Txt data line 2");
@@ -20,25 +19,25 @@ class TxtFileAdapter implements FileAdapter {
     }
 }
 
-class CsvFileAdapter implements FileAdapter {
+class CsvFileParsingStrategy implements FileParsingStrategy {
     @Override
-    public List<String> readData(String filePath) {
-        //Implement reading the data from a csv file
-        System.out.println("Reading data from a .csv file: " + filePath);
-        // make it read the data
+    public List<String> parseFile(String filePath) {
+        // Implement parsing data from a .csv file
+        System.out.println("Parsing data from a .csv file: " + filePath);
+        // Read and parse the data
         List<String> data = new ArrayList<>();
         data.add("Csv data line 1");
-        data.add("Csv data line 2");
+        data add("Csv data line 2");
         return data;
     }
 }
 
-class JsonFileAdapter implements FileAdapter {
+class JsonFileParsingStrategy implements FileParsingStrategy {
     @Override
-    public List<String> readData(String filePath) {
-        // Implement reading data from a json file
-        System.out.println("Reading data from a .json file: " + filePath);
-        // make it read the data
+    public List<String> parseFile(String filePath) {
+        // Implement parsing data from a .json file
+        System.out.println("Parsing data from a .json file: " + filePath);
+        // Read and parse the data
         List<String> data = new ArrayList<>();
         data.add("Json data line 1");
         data.add("Json data line 2");
@@ -46,13 +45,13 @@ class JsonFileAdapter implements FileAdapter {
     }
 }
 
-// Data Aggregator
+// DataAggregator
 class DataAggregator {
     private List<String> aggregatedData = new ArrayList<>();
 
-    public void aggregateData(FileAdapter adapter, String filePath) {
-        //Use the given adapter to read AND agregate data
-        List<String> data = adapter.readData(filePath);
+    public void aggregateData(FileParsingStrategy strategy, String filePath) {
+        // Use the given strategy to parse and aggregate data
+        List<String> data = strategy.parseFile(filePath);
         aggregatedData.addAll(data);
     }
 
@@ -60,3 +59,4 @@ class DataAggregator {
         return aggregatedData;
     }
 }
+
